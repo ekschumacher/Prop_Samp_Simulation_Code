@@ -174,15 +174,15 @@ for(i in 1:length(combinations)) {
 ##existing alleles by species 
 for(j in 1:length(highmig_alleles_existing_by_cat[1,])) {
   for (f in 1:length(allele_cat_tot)) {
-
-      highmig_alleles_existing_by_cat[f,j] <-  round(mean(highmig_all_existing_by_sp_reps[,j,f]), digits = 4)
-      highmig_equal_mean_all_cap[f,j] <- round(mean(highmig_equal_alleles[,j,f]), 4)
-      highmig_prop_mean_all_cap[f,j] <- round(mean(highmig_prop_alleles[,j,f]), 4)
-
-##calculate percent of allele capture
-     highmig_equal_mean_all_cap_per[f,j] <- round(mean(highmig_equal_per[,j,f]), 4)*100
-     highmig_prop_mean_all_cap_per[f,j] <- round(mean(highmig_prop_per[,j,f]), 4)*100 
-
+    
+    highmig_alleles_existing_by_cat[f,j] <-  signif(mean(highmig_all_existing_by_sp_reps[,j,f]), 3)
+    highmig_equal_mean_all_cap[f,j] <- signif(mean(highmig_equal_alleles[,j,f]), 3)
+    highmig_prop_mean_all_cap[f,j] <- signif(mean(highmig_prop_alleles[,j,f]),3)
+    
+    ##calculate percent of allele capture
+    highmig_equal_mean_all_cap_per[f,j] <- signif(mean(highmig_equal_per[,j,f]),3)*100
+    highmig_prop_mean_all_cap_per[f,j] <- signif(mean(highmig_prop_per[,j,f]),3)*100
+    
   }
 }
 
@@ -191,42 +191,42 @@ rownames(highmig_alleles_existing_by_cat) <- c("Scenario 1", "Scenario 2", "Scen
                                                "Scenario 6", "scenario 7", "Scenario 8", "Scenario 9")
 colnames(highmig_alleles_existing_by_cat) <- list_allele_cat
 
-write.csv(highmig_alleles_existing_by_cat, "highmig_alleles_existing_by_cat2.csv")
+write.csv(highmig_alleles_existing_by_cat, "highmig_alleles_existing_by_cat.csv")
 
 ##create a new df = equal sampling
 highmig_all_cap_equal_df <- matrix(nrow = length(highmig_equal_mean_all_cap_per[,1]), 
-        ncol = length(highmig_equal_mean_all_cap_per[,1]))
+                                   ncol = length(highmig_equal_mean_all_cap_per[,1]))
 
-  for(m in 1:length(highmig_equal_mean_all_cap_per[,1])){
-    for(n in 1:length(highmig_equal_mean_all_cap_per[,1])){
-       highmig_all_cap_equal_df[m,n] <- paste0(highmig_equal_mean_all_cap_per[m,n], "%", " ", "(", highmig_equal_mean_all_cap[m,n], ")")
-     }
-   }  
+for(m in 1:length(highmig_equal_mean_all_cap_per[,1])){
+  for(n in 1:length(highmig_equal_mean_all_cap_per[,1])){
+    highmig_all_cap_equal_df[m,n] <- paste0(highmig_equal_mean_all_cap_per[m,n], "%", " ", "(", highmig_equal_mean_all_cap[m,n], ")")
+  }
+}  
 
 rownames(highmig_all_cap_equal_df) <- c("Scenario 1", "Scenario 2", "Scenario 3", "Scenario 4", "Scenario 5",
-   "Scenario 6", "scenario 7", "Scenario 8", "Scenario 9")
+                                        "Scenario 6", "scenario 7", "Scenario 8", "Scenario 9")
 
 colnames(highmig_all_cap_equal_df) <- list_allele_cat
 
 ##make new table using proportional sampling 
 highmig_all_cap_prop_df <- matrix(nrow = length(highmig_prop_mean_all_cap_per[,1]), 
-       ncol = length(highmig_prop_mean_all_cap_per[,1]))
+                                  ncol = length(highmig_prop_mean_all_cap_per[,1]))
 
 
- for(o in 1:length(highmig_prop_mean_all_cap_per[,1])){
-   for(p in 1:length(highmig_prop_mean_all_cap_per[,1])){
-     highmig_all_cap_prop_df[o,p] <- paste0(highmig_prop_mean_all_cap_per[o,p], "%", " ", "(", highmig_prop_mean_all_cap[o,p], ")")
-   }
- }  
+for(o in 1:length(highmig_prop_mean_all_cap_per[,1])){
+  for(p in 1:length(highmig_prop_mean_all_cap_per[,1])){
+    highmig_all_cap_prop_df[o,p] <- paste0(highmig_prop_mean_all_cap_per[o,p], "%", " ", "(", highmig_prop_mean_all_cap[o,p], ")")
+  }
+}  
 
 rownames(highmig_all_cap_equal_df) <- c("Scenario 1", "Scenario 2", "Scenario 3", "Scenario 4", "Scenario 5",
-   "Scenario 6", "scenario 7", "Scenario 8", "Scenario 9")
+                                        "Scenario 6", "scenario 7", "Scenario 8", "Scenario 9")
 
 colnames(highmig_all_cap_prop_df) <- list_allele_cat
-  
+
 ##write out data frames
-write.csv(highmig_all_cap_equal_df, "highmig_all_cap_equal_df2.csv")
-write.csv(highmig_all_cap_prop_df, "highmig_all_cap_prop_df2.csv")
+write.csv(highmig_all_cap_equal_df, "highmig_all_cap_equal_df.csv")
+write.csv(highmig_all_cap_prop_df, "highmig_all_cap_prop_df.csv")
 
 ################################
 ###### Low migration tables ####
@@ -235,56 +235,61 @@ write.csv(highmig_all_cap_prop_df, "highmig_all_cap_prop_df2.csv")
 ##existing alleles by species 
 for(j in 1:length(lowmig_alleles_existing_by_cat[1,])) {
   for (f in 1:length(allele_cat_tot)) {
-
-    lowmig_alleles_existing_by_cat[f,j] <-  round(mean(lowmig_all_existing_by_sp_reps[,j,f]), digits = 4)
-    lowmig_equal_mean_all_cap[f,j] <- round(mean(lowmig_equal_alleles[,j,f]), 4)
-    lowmig_prop_mean_all_cap[f,j] <- round(mean(lowmig_prop_alleles[,j,f]), 4)
-
-  ##calculate percent of allele capture
-    lowmig_equal_mean_all_cap_per[f,j] <- round(mean(lowmig_equal_per[,j,f]), 4)*100
-    lowmig_prop_mean_all_cap_per[f,j] <- round(mean(lowmig_prop_per[,j,f]), 4)*100 
-
+    
+    lowmig_alleles_existing_by_cat[f,j] <-  signif(mean(lowmig_all_existing_by_sp_reps[,j,f]), 3)
+    lowmig_equal_mean_all_cap[f,j] <- signif(mean(lowmig_equal_alleles[,j,f]), 3)
+    lowmig_prop_mean_all_cap[f,j] <- signif(mean(lowmig_prop_alleles[,j,f]), 3)
+    
+    ##calculate percent of allele capture
+    lowmig_equal_mean_all_cap_per[f,j] <- signif(mean(lowmig_equal_per[,j,f]), 3)*100
+    lowmig_prop_mean_all_cap_per[f,j] <- signif(mean(lowmig_prop_per[,j,f]), 3)*100 
+    
   }
 }
+
 ##name rows and columns 
 rownames(lowmig_alleles_existing_by_cat) <- c("Scenario 1", "Scenario 2", "Scenario 3", "Scenario 4", "Scenario 5",
-                                                 "Scenario 6", "scenario 7", "Scenario 8", "Scenario 9")
+                                              "Scenario 6", "scenario 7", "Scenario 8", "Scenario 9")
 colnames(lowmig_alleles_existing_by_cat) <- list_allele_cat
 
-write.csv(lowmig_alleles_existing_by_cat, "lowmig_alleles_existing_by_cat2.csv")
+##write out files
+write.csv(lowmig_alleles_existing_by_cat, "lowmig_alleles_existing_by_cat.csv")
+write.csv(lowmig_equal_mean_all_cap, "lowmig_equal_mean_all_cap.csv")
+write.csv(lowmig_prop_mean_all_cap, "lowmig_prop_mean_all_cap.csv")
+write.csv(lowmig_equal_mean_all_cap_per, "lowmig_equal_mean_all_cap_per.csv")
+write.csv(lowmig_prop_mean_all_cap_per, "lowmig_prop_mean_all_cap_per.csv")
 
 ##create a new df = equal sampling
 lowmig_all_cap_equal_df <- matrix(nrow = length(lowmig_equal_mean_all_cap_per[,1]), 
                                   ncol = length(lowmig_equal_mean_all_cap_per[,1]))
 
 for(m in 1:length(lowmig_equal_mean_all_cap_per[,1])){
-   for(n in 1:length(lowmig_equal_mean_all_cap_per[,1])){
-     lowmig_all_cap_equal_df[m,n] <- paste0(lowmig_equal_mean_all_cap_per[m,n], "%", " ", "(", lowmig_equal_mean_all_cap[m,n], ")")
-    }
+  for(n in 1:length(lowmig_equal_mean_all_cap_per[,1])){
+    lowmig_all_cap_equal_df[m,n] <- paste0(lowmig_equal_mean_all_cap_per[m,n], "%", " ", "(", lowmig_equal_mean_all_cap[m,n], ")")
+  }
 }  
 
 rownames(lowmig_all_cap_equal_df) <- c("Scenario 1", "Scenario 2", "Scenario 3", "Scenario 4", "Scenario 5",
-                                        "Scenario 6", "scenario 7", "Scenario 8", "Scenario 9")
+                                       "Scenario 6", "scenario 7", "Scenario 8", "Scenario 9")
 
 colnames(lowmig_all_cap_equal_df) <- list_allele_cat
 
 ##make new table using proportional sampling 
 lowmig_all_cap_prop_df <- matrix(nrow = length(lowmig_prop_mean_all_cap_per[,1]), 
-                                    ncol = length(lowmig_prop_mean_all_cap_per[,1]))
+                                 ncol = length(lowmig_prop_mean_all_cap_per[,1]))
 
 
-  for(o in 1:length(lowmig_prop_mean_all_cap_per[,1])){
-   for(p in 1:length(lowmig_prop_mean_all_cap_per[,1])){
-     lowmig_all_cap_prop_df[o,p] <- paste0(lowmig_prop_mean_all_cap_per[o,p], "%", " ", "(", lowmig_prop_mean_all_cap[o,p], ")")
-   }
- }  
+for(o in 1:length(lowmig_prop_mean_all_cap_per[,1])){
+  for(p in 1:length(lowmig_prop_mean_all_cap_per[,1])){
+    lowmig_all_cap_prop_df[o,p] <- paste0(lowmig_prop_mean_all_cap_per[o,p], "%", " ", "(", lowmig_prop_mean_all_cap[o,p], ")")
+  }
+}  
 
 rownames(lowmig_all_cap_prop_df) <- c("Scenario 1", "Scenario 2", "Scenario 3", "Scenario 4", "Scenario 5",
-                                         "Scenario 6", "scenario 7", "Scenario 8", "Scenario 9")
+                                      "Scenario 6", "scenario 7", "Scenario 8", "Scenario 9")
 
 colnames(lowmig_all_cap_prop_df) <- list_allele_cat
 
 ##write out data frames
-write.csv(lowmig_all_cap_equal_df, "lowmig_all_cap_equal_df2.csv")
-write.csv(lowmig_all_cap_prop_df, "lowmig_all_cap_prop_df2.csv")
-
+write.csv(lowmig_all_cap_equal_df, "lowmig_all_cap_equal_df.csv")
+write.csv(lowmig_all_cap_prop_df, "lowmig_all_cap_prop_df.csv")
