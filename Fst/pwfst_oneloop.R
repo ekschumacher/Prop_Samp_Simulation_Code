@@ -67,18 +67,20 @@ for(i in 1:length(combinations)) {
         ##convert to hierfstat data frame and store in list
         highmig_hierfstat[[j]][[k]] <- genind2hierfstat(temp_genind)
         
-        ##pairwise fst results for all scenarios and replicates stored in a 4D array 
+        ##pairwise fst results for all scenarios and replicates stored in a 4D array - 
         highmig_pwfst_array[,,k,j] <-  pairwise.neifst(highmig_hierfstat[[j]][[k]])
         
-        ##take the mean pwfst and save it    
-        highmig_fst_df[j,1] <- signif(summary(highmig_pwfst_array[,,,j])[4], 2)
-        ##save min pwfst
-        highmig_fst_df[j,2] <- signif(summary(highmig_pwfst_array[,,,j])[1])
-        ##save max pwfst
-        highmig_fst_df[j,3] <- signif(summary(highmig_pwfst_array[,,,j])[6])
+        ##calculate max, min, and mean pwfst for every replicate
+        highmig_fst_min_mean_max[1,k,j] <- mean(highmig_pwfst_array[,,k,j], na.rm = TRUE)
+        highmig_fst_min_mean_max[2,k,j] <- min(highmig_pwfst_array[,,k,j], na.rm = TRUE)
+        highmig_fst_min_mean_max[3,k,j] <- max(highmig_pwfst_array[,,k,j], na.rm = TRUE)
         
-        ##reduce to 3 sigfigs
-        highmig_fst_df <- signif(highmig_fst_df, digits = 3)
+        ##write loops to calculate the mean of min/max/mean pwfst and then do it across scenario
+        for(a in 1:length(scenarios)){
+          for(b in 1:length(highmig_fst_min_mean_max[,1,1])){
+            highmig_pwfst_output[a,b] <- round(mean(highmig_fst_min_mean_max[b,,a]),3)
+          }
+        }
         
       } else {
         
@@ -88,15 +90,15 @@ for(i in 1:length(combinations)) {
         ##pairwise fst results for all scenarios and replicates stored in a 4D array 
         lowmig_pwfst_array[,,k,j] <-  pairwise.neifst(lowmig_hierfstat[[j]][[k]])
         
-        ##take mean pwfst
-        lowmig_fst_df[j,1] <- summary(lowmig_pwfst_array[,,,j])[4]
-        ##save min pwfst
-        lowmig_fst_df[j,2] <- summary(lowmig_pwfst_array[,,,j])[1]
-        ##save max pwfst
-        lowmig_fst_df[j,3] <- summary(lowmig_pwfst_array[,,,j])[6]
+        ##calculate max, min, and mean pwfst for every replicate
+        lowmig_fst_min_mean_max[1,k,j] <- mean(lowmig_pwfst_array[,,k,j], na.rm = TRUE)
+        lowmig_fst_min_mean_max[2,k,j] <- min(lowmig_pwfst_array[,,k,j], na.rm = TRUE)
+        lowmig_fst_min_mean_max[3,k,j] <- max(lowmig_pwfst_array[,,k,j], na.rm = TRUE)
         
-        ##reduce to 3 sigfigs
-        lowmig_fst_df <- signif(lowmig_fst_df, digits = 3)
+        ##write loops to calculate the mean of min/max/mean pwfst and then do it across scenario
+        for(a in 1:length(scenarios)){
+          for(b in 1:length(lowmig_fst_min_mean_max[,1,1])){
+            lowmig_pwfst_output[a,b] <- round(mean(lowmig_fst_min_mean_max[b,,a]),3)
         
       }
     }
@@ -105,16 +107,16 @@ for(i in 1:length(combinations)) {
 }
 
 ##name data frames - high mig
-rownames(highmig_fst_df) <- c("Scenario 1", "Scenario 2", "Scenario 3", "Scenario 4", "Scenario 5",
+rownames(highmig_pwfst_output) <- c("Scenario 1", "Scenario 2", "Scenario 3", "Scenario 4", "Scenario 5",
                               "Scenario 6", "scenario 7", "Scenario 8", "Scenario 9")
 
-colnames(highmig_fst_df) <- c("Mean Fst", "Min Fst", "Max Fst")
+colnames(highmig_pwfst_output) <- c("Mean Fst", "Min Fst", "Max Fst")
 
 ##name data frames - low mig
-rownames(lowmig_fst_df) <- c("Scenario 1", "Scenario 2", "Scenario 3", "Scenario 4", "Scenario 5",
+rownames(lowmig_pwfst_output) <- c("Scenario 1", "Scenario 2", "Scenario 3", "Scenario 4", "Scenario 5",
                               "Scenario 6", "scenario 7", "Scenario 8", "Scenario 9")
 
-colnames(lowmig_fst_df) <- c("Mean Fst", "Min Fst", "Max Fst")
+colnames(lowmig_pwfst_output) <- c("Mean Fst", "Min Fst", "Max Fst")
 
 
 
