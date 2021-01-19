@@ -34,14 +34,17 @@ quac_mean_max_min_fst <- matrix(nrow = 3, ncol = 100)
 
 #loop going through every replicate for each scenario
 for(k in 1:length(quac_list)) {
-  #creating a temporary genind object
+  
+  ##creating genind list for QUAC genind 
   quac_genind_list[[k]] <- read.genepop(quac_list[[k]], ncode=3)
   
+  ##convert genind files to hierfstat format to run pwfst 
   quac_hierfstat[[k]] <- genind2hierfstat(quac_genind_list[[k]])
   
+  ##array to store all pwfst values
   quac_pwfst_array[,,k] <- pairwise.neifst(quac_hierfstat[[k]])
   
-  ##calculate statistics for QUAC
+  ##calculate statistics for QUAC - max, min, mean fst 
   quac_mean_max_min_fst[1,k] <- mean(quac_pwfst_array[,,k], na.rm = TRUE)
   quac_mean_max_min_fst[2,k] <- min(quac_pwfst_array[,,k], na.rm = TRUE)
   quac_mean_max_min_fst[3,k] <- max(quac_pwfst_array[,,k], na.rm = TRUE)
@@ -56,7 +59,7 @@ quen_genind_list <- list()
 
 quen_hierfstat <- list()
 
-##quac pwfst array
+##quen pwfst array
 quen_pwfst_array <- array(dim = c(4,4,100))
 
 ##min, max, mean of replicates 
@@ -64,14 +67,17 @@ quen_mean_max_min_fst <- matrix(nrow = 3, ncol = 100)
 
 #loop going through every replicate for each scenario
 for(k in 1:length(quen_list)) {
-  #creating a temporary genind object
+  
+  ##creating genind list for QUEN genind 
   quen_genind_list[[k]] <- read.genepop(quen_list[[k]], ncode=3)
   
+  ##convert genind files to hierfstat format to run pwfst 
   quen_hierfstat[[k]] <- genind2hierfstat(quen_genind_list[[k]])
   
+  ##calculate statistics for QUEN - max, min, mean fst 
   quen_pwfst_array[,,k] <- pairwise.neifst(quen_hierfstat[[k]])
   
-  ##calculate statistics for QUAC
+  ##calculate statistics for QUEN
   quen_mean_max_min_fst[1,k] <- mean(quen_pwfst_array[,,k], na.rm = TRUE)
   quen_mean_max_min_fst[2,k] <- min(quen_pwfst_array[,,k], na.rm = TRUE)
   quen_mean_max_min_fst[3,k] <- max(quen_pwfst_array[,,k], na.rm = TRUE)
@@ -86,7 +92,7 @@ quog_genind_list <- list()
 
 quog_hierfstat <- list()
 
-##quac pwfst array
+##quog pwfst array
 quog_pwfst_array <- array(dim = c(5,5,100))
 
 ##min, max, mean of replicates 
@@ -94,14 +100,17 @@ quog_mean_max_min_fst <- matrix(nrow = 3, ncol = 100)
 
 #loop going through every replicate for each scenario
 for(k in 1:length(quog_list)) {
-  #creating a temporary genind object
+  
+  ##creating genind list for QUOG genind 
   quog_genind_list[[k]] <- read.genepop(quog_list[[k]], ncode=3)
   
+  ##convert genind files to hierfstat format for pwfst
   quog_hierfstat[[k]] <- genind2hierfstat(quog_genind_list[[k]])
   
+  ##QUOG pwfst array 
   quog_pwfst_array[,,k] <- pairwise.neifst(quog_hierfstat[[k]])
   
-  ##calculate statistics for QUAC
+  ##calculate statistics for QUOG
   quog_mean_max_min_fst[1,k] <- mean(quog_pwfst_array[,,k], na.rm = TRUE)
   quog_mean_max_min_fst[2,k] <- min(quog_pwfst_array[,,k], na.rm = TRUE)
   quog_mean_max_min_fst[3,k] <- max(quog_pwfst_array[,,k], na.rm = TRUE)
