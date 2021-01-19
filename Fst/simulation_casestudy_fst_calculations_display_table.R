@@ -48,23 +48,77 @@ for(k in 1:length(quac_list)) {
   
 }
     
-    ##write loops to calculate the mean of min/max/mean pwfst and then do it across scenario
-  #  for(a in 1:length(scenarios)){
-  #    for(b in 1:length(scenarios)){
-  #      species_pwfst_df[a,b] <- round(mean(species_array_pwfst[b,,a]),3)
-  #    }
-  #  }
-    
+################QUEN
+setwd(quen_dir)
+quen_list <- list.files(quen_dir,".gen$")
+
+quen_genind_list <- list() 
+
+quen_hierfstat <- list()
+
+##quac pwfst array
+quen_pwfst_array <- array(dim = c(4,4,100))
+
+##min, max, mean of replicates 
+quen_mean_max_min_fst <- matrix(nrow = 3, ncol = 100)
+
+#loop going through every replicate for each scenario
+for(k in 1:length(quen_list)) {
+  #creating a temporary genind object
+  quen_genind_list[[k]] <- read.genepop(quen_list[[k]], ncode=3)
   
-    }
-    
+  quen_hierfstat[[k]] <- genind2hierfstat(quen_genind_list[[k]])
+  
+  quen_pwfst_array[,,k] <- pairwise.neifst(quen_hierfstat[[k]])
+  
+  ##calculate statistics for QUAC
+  quen_mean_max_min_fst[1,k] <- mean(quen_pwfst_array[,,k], na.rm = TRUE)
+  quen_mean_max_min_fst[2,k] <- min(quen_pwfst_array[,,k], na.rm = TRUE)
+  quen_mean_max_min_fst[3,k] <- max(quen_pwfst_array[,,k], na.rm = TRUE)
+  
 }
 
-##name rows and columns 
-rownames(species_pwfst_df) <- species_names
+################QUOG
+setwd(quog_dir)
+quog_list <- list.files(quog_dir,".gen$")
+
+quog_genind_list <- list() 
+
+quog_hierfstat <- list()
+
+##quac pwfst array
+quog_pwfst_array <- array(dim = c(5,5,100))
+
+##min, max, mean of replicates 
+quog_mean_max_min_fst <- matrix(nrow = 3, ncol = 100)
+
+#loop going through every replicate for each scenario
+for(k in 1:length(quog_list)) {
+  #creating a temporary genind object
+  quog_genind_list[[k]] <- read.genepop(quog_list[[k]], ncode=3)
+  
+  quog_hierfstat[[k]] <- genind2hierfstat(quog_genind_list[[k]])
+  
+  quog_pwfst_array[,,k] <- pairwise.neifst(quog_hierfstat[[k]])
+  
+  ##calculate statistics for QUAC
+  quog_mean_max_min_fst[1,k] <- mean(quog_pwfst_array[,,k], na.rm = TRUE)
+  quog_mean_max_min_fst[2,k] <- min(quog_pwfst_array[,,k], na.rm = TRUE)
+  quog_mean_max_min_fst[3,k] <- max(quog_pwfst_array[,,k], na.rm = TRUE)
+  
+}
+
+###write loops to calculate the mean of min/max/mean pwfst and then do it across scenario
+for(a in 1:length(quog_mean_max_min_fst[,1])){
+  species_pwfst_df[1,a] <-  round(mean(quac_mean_max_min_fst[a,]),3)  
+  species_pwfst_df[2,a] <-  round(mean(quen_mean_max_min_fst[a,]),3)
+  species_pwfst_df[3,a] <- round(mean(quog_mean_max_min_fst[a,]),3)
+}
+
+##rename dfs 
+rownames(species_pwfst_df) <- c("QUAC","QUEN","QUOG")
 colnames(species_pwfst_df) <- c("MeanFst", "MinFst", "MaxFst")
 
-##write table out
-write.csv(species_pwfst_df, "case_study_pwfst_df.csv")
-
+##write out 
+write.csv(species_pwfst_df,"G:\\Shared drives\\Emily_Schumacher\\simulation_code\\case_studies\\Simulations\\casestudy_pwfst_df.csv")
 
