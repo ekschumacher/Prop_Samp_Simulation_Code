@@ -99,7 +99,8 @@ for(i in 1:length(combinations)) {
         for(a in 1:length(scenarios)){
           for(b in 1:length(lowmig_fst_min_mean_max[,1,1])){
             lowmig_pwfst_output[a,b] <- round(mean(lowmig_fst_min_mean_max[b,,a]),3)
-        
+          }
+        }
       }
     }
   }
@@ -121,6 +122,6 @@ colnames(lowmig_pwfst_output) <- c("Mean Fst", "Min Fst", "Max Fst")
 
 
 ##write out files
-write.csv(highmig_fst_df,"G:\\Shared drives\\Emily_Schumacher\\simulation_code\\highmig_fst_df.csv")
-write.csv(lowmig_fst_df,"G:\\Shared drives\\Emily_Schumacher\\simulation_code\\lowmig_fst_df.csv")
+write.csv(highmig_pwfst_output,"G:\\Shared drives\\Emily_Schumacher\\simulation_code\\highmig_fst_df.csv")
+write.csv(lowmig_pwfst_output,"G:\\Shared drives\\Emily_Schumacher\\simulation_code\\lowmig_fst_df.csv")
 
