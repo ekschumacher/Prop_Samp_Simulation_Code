@@ -12,16 +12,15 @@ library(ggpubr)
 library(ggsignif)
 library(tidyr)
 
-###################################
-###### Load Directory #############
-###################################
+#####################################
+###### Load Directories #############
+#####################################
 
 #containing sub-folders
 my_dir = "C:\\Users\\eschumacher\\Documents\\kaylee_code_1_19_21\\samp_pop_sims\\Simulations"
 setwd(my_dir)
-list_allele_cat<-c("global","glob_v_com","glob_com","glob_lowfr","glob_rare","reg_rare","loc_com_d1","loc_com_d2","loc_rare")
 
-###function
+###allelic capture functions 
 source("G:/Shared drives/Emily_Schumacher/ten_oaks_gen/Fa_sample_funcs.R")
 ##functions
 colMax <- function(data) sapply(data, max, na.rm = TRUE)
@@ -35,6 +34,13 @@ sample.pop<-function(genind_obj,vect_pop_ID,vect_samp_sizes){
   
   alleles
 }    
+
+########################
+######## Lists #########
+########################
+
+##allele frequency categories 
+list_allele_cat<-c("global","glob_v_com","glob_com","glob_lowfr","glob_rare","reg_rare","loc_com_d1","loc_com_d2","loc_rare")
 
 #list of combinations
 #combination sub-folder directories
@@ -52,9 +58,9 @@ scenarios = c("\\scen1",
               "\\scen8",
               "\\scen9")
 
-#####################################################
-############## Run Sampling Code ####################
-#####################################################
+#################################################################
+##### Run Sampling Code and Determine Allelic Capture ###########
+#################################################################
 
 ##matrices
 highmig_all_existing_by_sp_reps <- array(dim = c(100,9,9))
