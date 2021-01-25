@@ -112,8 +112,6 @@ lowmig_prop_mean_all_cap <- matrix(nrow = 9, ncol = 9)
 lowmig_equal_mean_all_cap_per <- matrix(nrow = 9, ncol = 9)
 lowmig_prop_mean_all_cap_per <- matrix(nrow = 9, ncol = 9)
 
-
-
 #looping over combinations, scenarios, and replicates
 #saving results in 2D arrays
 for(i in 1:length(combinations)) {
@@ -126,7 +124,7 @@ for(i in 1:length(combinations)) {
       #creating a temporary genind object
       temp_genind = read.genepop(list_files[[k]], ncode=3)
       
-      #defining how many alleles to sample based on rows_to_samp
+      #calculating the number of individuals per population 
       n_ind <- table(temp_genind@pop)
       
       ##create genepop file
