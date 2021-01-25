@@ -49,6 +49,9 @@ lowmig_hierfstat <- list(list(), list(), list(), list(),  list(),
 highmig_pwfst_array <- array(dim = c(5,5,100,9))
 lowmig_pwfst_array <- array(dim = c(5,5,100,9))
 
+##min max mean fst arrays
+highmig_fst_min_mean_max <- array(dim = c(3,100,9))
+
 ##results dfs
 highmig_fst_df <- matrix(nrow = 9, ncol = 3)
 lowmig_fst_df <- matrix(nrow = 9, ncol = 3)
